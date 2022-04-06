@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>codeGenerator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <header class="settings-header">
+      <a href="Chats.html" class="settings-header__column">
+        <span><i class="fas fa-bars"></i></span>
+      </a>
+      <h1 class="header__title settings-header__column">codeGenerator</h1>
+      <div class="header__pic settings-header__column">
+        <span><i class="fas fa-search"></i></span>
+      </div>
+    </header>
+
+    <main class="result-main">
+      <div class="before-modification">
+        <div><span>before</span></div>
+        <div><span>단어1 : </span><span>단어1-------</span></div>
+        <div><span>단어2 : </span><span>단어2-------</span></div>
+        <div><span>단어3 : </span><span>단어3-------</span></div>
+      </div>
+      <div class="after-modification">
+        <div><span>after</span></div>
+        <div><span>단어1 : </span><span>단어1-------</span></div>
+      </div>
+    </main>
+    <div class="levelpart">
+      <div class="codelevel">
+        <div class="codelevel_name">복잡도</div>
+        <div class="codelevel_bar">
+          <div class="codelevel_per" per="90"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(".codelevel_per").each(function () {
+        var $this = $(this);
+        var per = $this.attr("per");
+        $this.css("width", per + "%");
+        $({ animatedValue: 0 }).animate(
+          { animatedValue: per },
+          {
+            duration: 1000,
+            step: function () {
+              $this.attr("per", Math.floor(this.animatedValue));
+            },
+            complete: function () {
+              $this.attr("per", Math.floor(this.animatedValue) + "%");
+            },
+          }
+        );
+      });
+    </script>
+
+    <script
+      src="https://kit.fontawesome.com/87de356888.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
