@@ -1,0 +1,143 @@
+body {
+  height: 100vh;
+  background-color: #abc1d1;
+}
+.settings-header {
+  padding: 25px;
+  padding-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.settings-header h1 {
+  font-size: 25px;
+}
+
+.settings-header span:first-child {
+  font-size: 25px;
+  font-weight: 500;
+  color: black;
+}
+
+.settings-header__column {
+  width: 33%;
+}
+
+.settings-header__column:nth-child(2) {
+  display: flex;
+  justify-content: center;
+}
+
+.settings-header__column:last-child {
+  display: flex;
+  justify-content: flex-end;
+}
+.home-main {
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main button {
+  width: 20%;
+  height: 20%;
+  font-size: 5rem;
+  margin: 0;
+  font-weight: 400;
+  text-align: center;
+  display: inline-block;
+  width: auto;
+  border: none;
+  border-radius: 10px;
+}
+main > div {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 30px;
+}
+button:hover {
+  background-color: #025ce2;
+  outline: 0;
+}
+.result-main {
+  width: 100vw;
+  height: 60vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.result-meta-info {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 20px;
+}
+.name {
+  width: 100vw;
+  height: 10vh;
+  display: flex;
+  justify-content: space-evenly;
+}
+.after-modification div:nth-child(2) {
+  position: relative;
+  bottom: 100px;
+}
+.levelpart {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.codelevel {
+  width: 100%;
+  max-width: 600px;
+  padding: 0 20px;
+}
+.codelevel_name {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 20px 0;
+}
+.codelevel_bar {
+  height: 20px;
+  background-color: #cacaca;
+  border-radius: 8px;
+}
+.codelevel_per {
+  height: 20px;
+  background-color: #0fbcf9;
+  border-radius: 8px;
+  width: 0;
+  transition: 1s linear;
+  position: relative;
+}
+.codelevel_per::before {
+  content: attr(per);
+  position: absolute;
+  padding: 4px 6px;
+  background-color: #000;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  top: -35px;
+  right: 0;
+  transform: translateX(50%);
+}
+.codelevel_per::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  top: -16px;
+  right: 0;
+  transform: translateX(50%) rotate(45deg);
+  border-radius: 2px;
+}
