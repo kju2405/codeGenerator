@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,32 +10,34 @@
   </head>
   <body>
     <header class="settings-header">
-      <a href="Chats.html" class="settings-header__column">
-        <span><i class="fas fa-bars"></i></span>
+      <a href="/" class="settings-header__column">
+        <span><i class="fas fa-home"></i></span>
       </a>
       <h1 class="header__title settings-header__column">codeGenerator</h1>
       <div class="header__pic settings-header__column">
-        <span><i class="fas fa-search"></i></span>
+        <span><i class="fa fa-refresh" onclick="location.href='result'"></i></span>
       </div>
     </header>
 
     <main class="result-main">
       <div class="before-modification">
-        <div><span>before</span></div>
-        <div><span>단어1 : </span><span>단어1-------</span></div>
-        <div><span>단어2 : </span><span>단어2-------</span></div>
-        <div><span>단어3 : </span><span>단어3-------</span></div>
+        <div><span>단어 후보군</span></div>
+        <div><span>단어1 : </span><span>{{ d1 }}</span></div>
+        <div><span>단어2 : </span><span>{{ d2 }}</span></div>
+        <div><span>단어3 : </span><span>{{ d3 }}</span></div>
       </div>
       <div class="after-modification">
-        <div><span>after</span></div>
-        <div><span>단어1 : </span><span>단어1-------</span></div>
+        <div><span>변환 결과</span></div>
+        <div><span>치환 : </span><span>{{ d4 }}</span></div>
+        <div><span>언어적 유사도 : </span><span>{{ d5 }}</span></div>
+        <div><span>길이 : </span><span>{{ d6 }}</span></div>
       </div>
     </main>
     <div class="levelpart">
       <div class="codelevel">
-        <div class="codelevel_name">복잡도</div>
+        <div class="codelevel_name">복잡도 (80% 이상 사용 권장)</div>
         <div class="codelevel_bar">
-          <div class="codelevel_per" per="90"></div>
+          <div class="codelevel_per" per='{{ d7 }}'></div>
         </div>
       </div>
     </div>

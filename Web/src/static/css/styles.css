@@ -86,7 +86,6 @@ button:hover {
 }
 .after-modification div:nth-child(2) {
   position: relative;
-  bottom: 100px;
 }
 .levelpart {
   width: 100%;
