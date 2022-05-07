@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect,  flash
 import sqlite3
 import os
 import sys
@@ -17,6 +17,7 @@ dbPath = os.environ.get("DBPATH")
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))))
 
 app = Flask(__name__, template_folder='templates')
+app.secret_key="My_Key"
 
 conn = sqlite3.connect(dbPath, check_same_thread=False)
 curs = conn.cursor()
@@ -78,7 +79,7 @@ def generateRandomPW():
 
     return toBereturned
 
-
+result_code=''
 
 @app.route('/')
 def index():
@@ -87,7 +88,25 @@ def index():
 @app.route("/result")
 def result():
     toBereturned = generateRandomPW()
+    global result_code 
+    result_code=toBereturned[3]
     return render_template('result.html', d1 = toBereturned[0], d2 = toBereturned[1], d3 = toBereturned[2], d4 = toBereturned[3], d5 = toBereturned[4], d6 = toBereturned[5], d7 = toBereturned[6])
+
+@app.route('/check/',methods=['GET','POST'])
+def check():
+    global result_code
+    if request.method =='GET':
+        return render_template('check.html',d1 = result_code)
+    elif request.method=='POST':
+        first_input=request.form['first-input']
+        second_input=request.form['second-input']
+        if first_input==second_input and first_input==result_code:
+            url='/'
+            return redirect(url)
+        else:
+            flash("암호가 일치하지 않습니다. 다시 한번 입력해주세요.")
+            return render_template('check.html',d1= result_code)
+        
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

@@ -140,3 +140,22 @@ button:hover {
   transform: translateX(50%) rotate(45deg);
   border-radius: 2px;
 }
+.result_low_part {
+  width: 80vw;
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.link_check {
+  background-color: white;
+  width: 200px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 10px;
+  font-size: 20px;
+  border-radius: 15px;
+}

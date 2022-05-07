@@ -1,5 +1,4 @@
 import pandas as pd
-from IPython.display import display 
 from ast import expr_context
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys

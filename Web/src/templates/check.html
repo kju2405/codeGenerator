@@ -1,0 +1,62 @@
+{% with messages=get_flashed_messages() %} {% if messages %}
+<script>
+  alert("{{messages[-1]}}");
+</script>
+{% endif %} {% endwith %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/check_styles.css')}}"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>codeGenerator</title>
+  </head>
+  <body>
+    <header class="settings-header">
+      <a href="/" class="settings-header__column">
+        <span><i class="fas fa-home"></i></span>
+      </a>
+      <h1 class="header__title settings-header__column">codeGenerator</h1>
+      <div class="header__pic settings-header__column">
+        <span
+          ><i class="fa fa-refresh" onclick="location.href='result'"></i
+        ></span>
+      </div>
+    </header>
+
+    <header class="welcome-header">
+      <h1 class="welcome-header__title">암호 생성을 축하합니다!</h1>
+      <p class="welcome-header__text">
+        암기를 위해서 코드를 직접 입력해주세요.
+      </p>
+      <p>↓↓↓↓생성된 암호↓↓↓↓</p>
+      <span>{{ d1 }}</span>
+    </header>
+
+    <form action="/check/" method="POST" id="memory-form">
+      <input
+        name="first-input"
+        required
+        type="text"
+        placeholder="암호를 입력해주세요."
+      />
+      <input
+        name="second-input"
+        required
+        type="password"
+        placeholder="한번 더 입력해주세요."
+      />
+      <input type="submit" value="암호 암기 완료!" />
+    </form>
+
+    <script
+      src="https://kit.fontawesome.com/87de356888.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

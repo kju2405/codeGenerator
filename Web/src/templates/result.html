@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/styles.css')}}"
+    />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,7 +18,9 @@
       </a>
       <h1 class="header__title settings-header__column">codeGenerator</h1>
       <div class="header__pic settings-header__column">
-        <span><i class="fa fa-refresh" onclick="location.href='result'"></i></span>
+        <span
+          ><i class="fa fa-refresh" onclick="location.href='result'"></i
+        ></span>
       </div>
     </header>
 
@@ -33,13 +38,16 @@
         <div><span>길이 : </span><span>{{ d6 }}</span></div>
       </div>
     </main>
-    <div class="levelpart">
-      <div class="codelevel">
-        <div class="codelevel_name">복잡도 (80% 이상 사용 권장)</div>
-        <div class="codelevel_bar">
-          <div class="codelevel_per" per='{{ d7 }}'></div>
+    <div class="result_low_part">
+      <div class="levelpart">
+        <div class="codelevel">
+          <div class="codelevel_name">복잡도 (80% 이상 사용 권장)</div>
+          <div class="codelevel_bar">
+            <div class="codelevel_per" per="{{ d7 }}"></div>
+          </div>
         </div>
       </div>
+      <div class="link_check"><a href="/check/">Use this code!</a></div>
     </div>
 
     <script>
