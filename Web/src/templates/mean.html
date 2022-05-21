@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/mean_styles.css')}}"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meanings</title>
+  </head>
+  <body class="chat-screen">
+    <header class="settings-header">
+      <a href="/" class="settings-header__column">
+        <span><i class="fas fa-home"></i></span>
+      </a>
+      <h1 class="header__title settings-header__column">codeGenerator</h1>
+      <div class="header__pic settings-header__column">
+        <a href="/result"
+          ><span><i class="fa fa-refresh"></i></span
+        ></a>
+      </div>
+    </header>
+
+    <main class="friends-screen main-chat">
+      <div class="settings-header-semi">
+        <span>암호로 선정된 단어들의 의미를 알아봅시다.</span>
+      </div>
+      <div class="words">
+        <div class="message-row">
+          <img src="{{url_for('static',filename = 'css/1.png')}}" />
+          <div class="message-row__content">
+            <div class="message__info">
+              <span class="message__bubble">{{ d1 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="message-row__right">
+          <div class="message-row__content">
+            <div class="message__info">
+              <span class="message__bubble__right">{{ d4 }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="words">
+        <div class="message-row">
+          <img src="{{url_for('static',filename = 'css/2.png')}}" />
+          <div class="message-row__content">
+            <div class="message__info">
+              <span class="message__bubble">{{ d2 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="message-row__right">
+          <div class="message-row__content">
+            <div class="message__info">
+              <span class="message__bubble__right">{{ d5 }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="words">
+        <div class="message-row">
+          <img src="{{url_for('static',filename = 'css/3.png')}}" />
+          <div class="message-row__content">
+            <div class="message__info">
+              <span class="message__bubble">{{ d3 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="message-row__right">
+          <div class="message-row__content">
+            <div class="message__info">
+              <span class="message__bubble__right">{{ d6 }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <form class="reply" action="/check/" method="get">
+      <div class="reply__column">
+        <li><label for="firstPw">'{{ d1 }}'의 의미를 확인하셨나요?</label></li>
+        <li><label for="secondPw">'{{ d2 }}'의 의미를 확인하셨나요?</label></li>
+        <li><label for="thirdPw">'{{ d3 }}'의 의미를 확인하셨나요?</label></li>
+      </div>
+      <div class="reply__column">
+        <div>
+          <input
+            type="checkbox"
+            id="firstPw"
+            name="check_info"
+            value="firstPw"
+            required
+          />확인
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            id="secondPw"
+            name="check_info"
+            value="secondPw"
+            required
+          />확인
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            id="thirdPw"
+            name="check_info"
+            value="thirdPw"
+            required
+          />확인
+        </div>
+      </div>
+      <div class="reply__column">
+        <button type="submit">단어들의 의미를 모두 확인했습니다.</button>
+      </div>
+    </form>
+
+    <script
+      src="https://kit.fontawesome.com/87de356888.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

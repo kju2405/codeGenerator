@@ -73,13 +73,19 @@ def generateRandomPW():
         toString += fetchedData[0][1] + fetchedData[1][1] + fetchedData[2][1]
         toPassword = ''
         toPassword += fetchedData[0][3] + fetchedData[1][3] + fetchedData[2][3]
-        toBereturned = [fetchedData[0][0], fetchedData[1][0], fetchedData[2][0], toString, float(condition_01 + condition_02 + condition_03)/3, len(toPassword), (pwd.passwdCheck(toPassword)) * 20]
+        toBereturned = [fetchedData[0][0], fetchedData[1][0], fetchedData[2][0], toString, float(condition_01 + condition_02 + condition_03)/3, len(toPassword), (pwd.passwdCheck(toPassword)) * 20,fetchedData[0][7],fetchedData[1][7],fetchedData[2][7]]
     else:
         generateRandomPW()
 
     return toBereturned
 
 result_code=''
+first_word=''
+second_word=''
+third_word=''
+first_meaning=''
+second_meaning=''
+third_meaning=''
 
 @app.route('/')
 def index():
@@ -88,9 +94,21 @@ def index():
 @app.route("/result")
 def result():
     toBereturned = generateRandomPW()
-    global result_code 
+    global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning 
     result_code=toBereturned[3]
+    first_word=toBereturned[0]
+    second_word=toBereturned[1]
+    third_word=toBereturned[2]
+    first_meaning=toBereturned[7]
+    second_meaning=toBereturned[8]
+    third_meaning=toBereturned[9]
+    
     return render_template('result.html', d1 = toBereturned[0], d2 = toBereturned[1], d3 = toBereturned[2], d4 = toBereturned[3], d5 = toBereturned[4], d6 = toBereturned[5], d7 = toBereturned[6])
+
+@app.route("/mean/")
+def mean():    
+    global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning 
+    return render_template('mean.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = first_meaning, d5 = second_meaning, d6 = third_meaning)
 
 @app.route('/check/',methods=['GET','POST'])
 def check():
