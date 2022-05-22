@@ -152,6 +152,9 @@ cython_debug/
 
 # Manually added test files
 temp_forPaper.py
+*.npy
+*.model
+Okt_failure.ipynb
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
