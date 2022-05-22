@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/choice_styles.css')}}"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choice</title>
+  </head>
+  <body class="chat-screen">
+    <header class="settings-header">
+      <a href="/" class="settings-header__column">
+        <span><i class="fas fa-home"></i></span>
+      </a>
+      <h1 class="header__title settings-header__column">codeGenerator</h1>
+      <div class="header__pic settings-header__column">
+        <a href="/result"
+          ><span><i class="fa fa-refresh"></i></span
+        ></a>
+      </div>
+    </header>
+
+    <form method="post" class="friends-screen main-chat" action="/check/">
+      <div class="settings-header-semi">
+        <span>암호로 사용할 단어의 변환 방법을 선택해주세요.</span>
+      </div>
+      <div class="words">
+        <div class="message-row">
+          <img src="{{url_for('static',filename = 'css/1.png')}}" />
+          <div class="message-row__content">
+            <div class="message__info">
+              <span class="message__bubble">{{ d1 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="message-row__right">
+          <div class="message-row__content">
+            <div class="message__info">
+              <input
+                type="radio"
+                name="first-choice"
+                value="first-choice-left"
+                id="first-choice-left"
+              />
+              <label for="first-choice-left"
+                ><span class="message__bubble__right">{{ d4 }}</span></label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="message-row__right">
+          <div class="message-row__content">
+            <div class="message__info">
+              <input
+                type="radio"
+                name="first-choice"
+                value="first-choice-right"
+                id="first-choice-right"
+              />
+              <label for="first-choice-right"
+                ><span class="message__bubble__right">{{ d7 }}</span></label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="words">
+        <div class="message-row">
+          <img src="{{url_for('static',filename = 'css/2.png')}}" />
+          <div class="message-row__content">
+            <div class="message__info">
+              <span class="message__bubble">{{ d2 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="message-row__right">
+          <div class="message-row__content">
+            <div class="message__info">
+              <input
+                type="radio"
+                name="second-choice"
+                value="second-choice-left"
+                id="second-choice-left"
+              />
+              <label for="second-choice-left"
+                ><span class="message__bubble__right">{{ d5 }}</span></label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="message-row__right">
+          <div class="message-row__content">
+            <div class="message__info">
+              <input
+                type="radio"
+                name="second-choice"
+                value="second-choice-right"
+                id="second-choice-right"
+              />
+              <label for="second-choice-right"
+                ><span class="message__bubble__right">{{ d8 }}</span></label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="words">
+        <div class="message-row">
+          <img src="{{url_for('static',filename = 'css/3.png')}}" />
+          <div class="message-row__content">
+            <div class="message__info">
+              <span class="message__bubble">{{ d3 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="message-row__right">
+          <div class="message-row__content">
+            <div class="message__info">
+              <input
+                type="radio"
+                name="third-choice"
+                value="third-choice-left"
+                id="third-choice-left"
+              />
+              <label for="third-choice-left"
+                ><span class="message__bubble__right">{{ d6 }}</span></label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="message-row__right">
+          <div class="message-row__content">
+            <div class="message__info">
+              <input
+                type="radio"
+                name="third-choice"
+                value="third-choice-right"
+                id="third-choice-right"
+              />
+              <label for="third-choice-right"
+                ><span class="message__bubble__right">{{ d9 }}</span></label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reply">
+        <div class="reply__column">
+          <li>
+            <label for="firstPw">'{{ d1 }}'의 변환 방법을 암기하셨나요?</label>
+          </li>
+          <li>
+            <label for="secondPw">'{{ d2 }}'의 변환 방법을 암기하셨나요?</label>
+          </li>
+          <li>
+            <label for="thirdPw">'{{ d3 }}'의 변환 방법을 암기하셨나요?</label>
+          </li>
+        </div>
+        <div class="reply__column">
+          <div>
+            <input
+              type="checkbox"
+              id="firstPw"
+              name="check_info"
+              value="firstPw"
+              required
+            />확인
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="secondPw"
+              name="check_info"
+              value="secondPw"
+              required
+            />확인
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="thirdPw"
+              name="check_info"
+              value="thirdPw"
+              required
+            />확인
+          </div>
+        </div>
+        <div class="reply__column">
+          <button type="submit">단어들의 변환방법을 모두 숙지했습니다.</button>
+        </div>
+      </div>
+    </form>
+
+    <script
+      src="https://kit.fontawesome.com/87de356888.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
