@@ -72,11 +72,31 @@ button:hover {
   justify-content: space-evenly;
   align-items: center;
 }
+.after-modification {
+  display: flex;
+  align-items: flex-start;
+}
+.before-modification {
+  display: flex;
+  align-items: flex-start;
+}
 .result-meta-info {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   font-size: 20px;
+}
+.result-btn {
+  width: 100%;
+  position: relative;
+  right: 20px;
+}
+.result-btn button {
+  width: 130%;
+  height: 50%;
+  font-size: 25px;
+  padding: 10px 20px;
+  border-radius: 20px;
 }
 .name {
   width: 100vw;

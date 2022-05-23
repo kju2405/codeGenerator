@@ -26,14 +26,14 @@
 
     <main class="result-main">
       <div class="before-modification">
-        <div><span>단어 후보군</span></div>
-        <div><span>단어1 : </span><span>{{ d1 }}</span></div>
-        <div><span>단어2 : </span><span>{{ d2 }}</span></div>
-        <div><span>단어3 : </span><span>{{ d3 }}</span></div>
+        <div><h2><<단어 변환 결과>></h2></div>
+        <div><span>단어1 : </span><span>{{ d1 }} -> {{ d8 }}</span></div>
+        <div><span>단어2 : </span><span>{{ d2 }} -> {{ d9 }}</span></div>
+        <div><span>단어3 : </span><span>{{ d3 }} -> {{ d10 }}</span></div>
       </div>
       <div class="after-modification">
-        <div><span>변환 결과</span></div>
-        <div><span>치환 : </span><span>{{ d4 }}</span></div>
+        <div><h2><<암호 정보>></h2></div>
+        <div><span>최종 암호 : </span><span>{{ d4 }}</span></div>
         <div><span>언어적 유사도 : </span><span>{{ d5 }}</span></div>
         <div><span>길이 : </span><span>{{ d6 }}</span></div>
       </div>
@@ -47,7 +47,13 @@
           </div>
         </div>
       </div>
-      <div class="link_check"><a href="/mean/">Use this code!</a></div>
+      <form>
+        <div class="result-btn">
+          <button type="submit" onclick="javascript: form.action='/'">
+            암호를 다시 생성할래요!
+          </button>
+        </div>
+      </form>
     </div>
 
     <script>

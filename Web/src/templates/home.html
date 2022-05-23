@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/styles.css')}}"
+    />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,12 +17,14 @@
       </a>
       <h1 class="header__title settings-header__column">codeGenerator</h1>
       <div class="header__pic settings-header__column">
-        <span><i class="fa fa-refresh" onclick="location.href='result'"></i></span>
+        <span
+          ><i class="fa fa-refresh" onclick="location.href='result'"></i
+        ></span>
       </div>
     </header>
 
     <main class="home-main">
-      <a onclick="window.location.href='result'"><button>Generate</button></a>
+      <a onclick="window.location.href='mean'"><button>Generate</button></a>
     </main>
 
     <script

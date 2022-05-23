@@ -73,7 +73,7 @@ def generateRandomPW():
         toString += fetchedData[0][1] + fetchedData[1][1] + fetchedData[2][1]
         toPassword = ''
         toPassword += fetchedData[0][3] + fetchedData[1][3] + fetchedData[2][3]
-        toBereturned = [fetchedData[0][0], fetchedData[1][0], fetchedData[2][0], toString, float(condition_01 + condition_02 + condition_03)/3, len(toPassword), (pwd.passwdCheck(toPassword)) * 20,fetchedData[0][7],fetchedData[1][7],fetchedData[2][7],fetchedData[0][2],fetchedData[1][2],fetchedData[2][2],fetchedData[0][1],fetchedData[1][1],fetchedData[2][1]]
+        toBereturned = [fetchedData[0][0], fetchedData[1][0], fetchedData[2][0], toString, float(condition_01 + condition_02 + condition_03)/3, len(toPassword), (pwd.passwdCheck(toPassword)) * 20,fetchedData[0][7],fetchedData[1][7],fetchedData[2][7],fetchedData[0][2],fetchedData[1][2],fetchedData[2][2],fetchedData[0][1],fetchedData[1][1],fetchedData[2][1],fetchedData[0][3],fetchedData[1][3],fetchedData[2][3],fetchedData[0][4],fetchedData[1][4],fetchedData[2][4]]
     else:
         generateRandomPW()
 
@@ -92,16 +92,35 @@ third_ssangjaeum=''
 first_word2pron=''
 second_word2pron=''
 third_word2pron=''
+first_pron2pw=''
+second_pron2pw=''
+third_pron2pw=''
+first_strong2pw=''
+second_strong2pw=''
+third_strong2pw=''
 final_pw=''
+final_first=''
+final_second=''
+final_third=''
+codelevel=''
+similarity=''
+
 
 @app.route('/')
 def index():
     return render_template('home.html')
 
-@app.route("/result")
+@app.route("/result",methods=['GET','POST'])
 def result():
+    global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,codelevel,similarity,final_first,final_second,final_third
+    
+    
+    return render_template('result.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = similarity, d6 = len(result_code), d7 = codelevel,d8=final_first, d9=final_second, d10=final_third)
+
+@app.route("/mean/")
+def mean():    
     toBereturned = generateRandomPW()
-    global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron
+    global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,codelevel,similarity
     result_code=toBereturned[3]
     first_word=toBereturned[0]
     second_word=toBereturned[1]
@@ -115,12 +134,15 @@ def result():
     first_word2pron=toBereturned[13]
     second_word2pron=toBereturned[14]
     third_word2pron=toBereturned[15]
+    first_pron2pw=toBereturned[16]
+    second_pron2pw=toBereturned[17]
+    third_pron2pw=toBereturned[18]
+    first_strong2pw=toBereturned[19]
+    second_strong2pw=toBereturned[20]
+    third_strong2pw=toBereturned[21]
+    codelevel=toBereturned[6]
+    similarity=toBereturned[4]
     
-    return render_template('result.html', d1 = toBereturned[0], d2 = toBereturned[1], d3 = toBereturned[2], d4 = toBereturned[3], d5 = toBereturned[4], d6 = toBereturned[5], d7 = toBereturned[6])
-
-@app.route("/mean/")
-def mean():    
-    global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning 
     return render_template('mean.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = first_meaning, d5 = second_meaning, d6 = third_meaning)
 
 @app.route("/choice/")
@@ -130,7 +152,7 @@ def choice():
 
 @app.route('/check/',methods=['GET','POST'])
 def check():
-    global result_code,first_word2pron,second_word2pron,third_word2pron,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum
+    global result_code,first_word2pron,second_word2pron,third_word2pron,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,final_pw,final_first,final_second,final_third
     if request.method =='GET':
         return render_template('check.html',d1 = result_code)
     elif request.method=='POST':
@@ -141,26 +163,43 @@ def check():
             result_code=''
             if first_choice=='first-choice-left':
                 result_code+=first_ssangjaeum
+                final_pw+=first_strong2pw
+                final_first+=first_ssangjaeum
             else:
                 result_code+=first_word2pron
+                final_pw+=first_pron2pw
+                final_first+=first_word2pron
             if second_choice=='second-choice-left':
                 result_code+=second_ssangjaeum
+                final_pw+=second_strong2pw
+                final_second+=second_ssangjaeum
             else:
                 result_code+=second_word2pron
+                final_pw+=second_pron2pw
+                final_second+=second_word2pron
             if third_choice=='third-choice-left':
                 result_code+=third_ssangjaeum
+                final_pw+=third_strong2pw
+                final_third+=third_ssangjaeum
             else:
                 result_code+=third_word2pron
+                final_pw+=third_pron2pw
+                final_third+=third_word2pron
             return render_template('check.html',d1= result_code)
         else:        
             first_input=request.form['first-choice']
             second_input=request.form['second-choice']
-            if first_input==second_input and first_input==result_code:
-                url='/'
+            if first_input==second_input and first_input==final_pw:
+                url='/final/'
                 return redirect(url)
             else:
                 flash("암호가 일치하지 않습니다. 다시 한번 입력해주세요.")
-                return render_template('check.html',d1= result_code)            
+                return render_template('check.html',d1= result_code)  
+@app.route("/final/")
+def final():    
+    global result_code,first_word,second_word,third_word,final_first,final_second,final_third
+    return render_template('final.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = final_first, d6 = final_second,d7=final_third)
+          
         
 
 if __name__ == '__main__':
