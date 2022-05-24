@@ -117,14 +117,14 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+# Environments (Added for final version)
+#.env
+#.venv
+#env/
+#venv/
+#ENV/
+#env.bak/
+#venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -151,10 +151,8 @@ dmypy.json
 cython_debug/
 
 # Manually added test files
-temp_forPaper.py
-*.npy
-*.model
-Okt_failure.ipynb
+#temp_forPaper.py
+#Okt_failure.ipynb
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
