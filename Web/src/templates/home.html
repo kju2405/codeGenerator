@@ -22,10 +22,63 @@
         ></span>
       </div>
     </header>
+    <div class="home-choice">
+      <div class="settings-header-semi">
+        <span>암호로 선정할 단어의 길이 옵션을 선택해주세요.</span>
+      </div>
+    </div>
 
-    <main class="home-main">
-      <a onclick="window.location.href='mean'"><button>Generate</button></a>
-    </main>
+    <form action="/mean/" method="post">
+      <div class="home-choice-form">
+        <div class="message__info">
+          <input
+            type="radio"
+            name="codelength"
+            value="no-filter"
+            id="no-filter"
+          />
+          <label for="no-filter"
+            ><span class="message__bubble__right">필터 없음</span></label
+          >
+        </div>
+        <div class="message__info">
+          <input
+            type="radio"
+            name="codelength"
+            value="under-three"
+            id="under-three"
+          />
+          <label for="under-three"
+            ><span class="message__bubble__right">3글자 이하</span></label
+          >
+        </div>
+        <div class="message__info">
+          <input
+            type="radio"
+            name="codelength"
+            value="under-four"
+            id="under-four"
+          />
+          <label for="under-four"
+            ><span class="message__bubble__right">4글자 이하</span></label
+          >
+        </div>
+        <div class="message__info">
+          <input
+            type="radio"
+            name="codelength"
+            value="under-five"
+            id="under-five"
+          />
+          <label for="under-five"
+            ><span class="message__bubble__right">5글자 이하</span></label
+          >
+        </div>
+      </div>
+      <div class="reply__column">
+        <button type="submit">Generate</button>
+      </div>
+    </form>
 
     <script
       src="https://kit.fontawesome.com/87de356888.js"

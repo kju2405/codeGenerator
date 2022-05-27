@@ -35,24 +35,64 @@ body {
 }
 .home-main {
   width: 100vw;
-  height: 70vh;
+  height: 30vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-main button {
-  width: 20%;
-  height: 20%;
-  font-size: 5rem;
-  margin: 0;
-  font-weight: 400;
-  text-align: center;
-  display: inline-block;
-  width: auto;
-  border: none;
-  border-radius: 10px;
+.home-choice {
+  width: 100vw;
+  height: 20vh;
+  display: flex;
+  justify-content: center;
 }
+.home-choice-form {
+  width: 100vw;
+  height: 25vh;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 30px;
+}
+.message__bubble__right {
+  padding: 8px 13px;
+  background-color: #fae100;
+  border-radius: 15px;
+  display: block;
+}
+.message__info {
+  display: flex;
+  align-items: center;
+}
+.settings-header-semi {
+  background-color: #92a4b2;
+  width: 80%;
+  height: 50px;
+  padding: 30px;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  color: white;
+  z-index: 2;
+  margin-bottom: 25px;
+}
+.reply__column {
+  display: flex;
+  justify-content: center;
+}
+.reply__column button {
+  width: 30%;
+  height: 50%;
+  font-size: 50px;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+.reply__column button:hover {
+  background-color: #025ce2;
+  outline: 0;
+}
+
 main > div {
   height: 50vh;
   display: flex;
@@ -61,10 +101,7 @@ main > div {
   align-items: center;
   font-size: 30px;
 }
-button:hover {
-  background-color: #025ce2;
-  outline: 0;
-}
+
 .result-main {
   width: 100vw;
   height: 60vh;
