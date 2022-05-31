@@ -81,9 +81,9 @@ def calculateWordSimilarity(word_01, word_02):
     return result
 
 
-def generateRandomPW():
+def generateRandomPW(num):
     for x in range(3):
-        curs.execute("select * from wordlist where PWChecker_Pron >= 5 order by RANDOM() limit 1")
+        curs.execute(f'select * from wordlist where PWChecker_Pron >= 5 and length(Word)<{num} order by RANDOM() limit 1')
         fetchresult = curs.fetchone()
         fetchedData[x] = list(fetchresult)
 
@@ -100,7 +100,7 @@ def generateRandomPW():
         toBereturned = [fetchedData[0][0], fetchedData[1][0], fetchedData[2][0], toString, float(condition_01 + condition_02 + condition_03)/3, len(toPassword), (pwd.passwdCheck(toPassword)) * 20,fetchedData[0][7],fetchedData[1][7],fetchedData[2][7],fetchedData[0][2],fetchedData[1][2],fetchedData[2][2],fetchedData[0][1],fetchedData[1][1],fetchedData[2][1],fetchedData[0][3],fetchedData[1][3],fetchedData[2][3],fetchedData[0][4],fetchedData[1][4],fetchedData[2][4]]
         return toBereturned
     else:
-        return generateRandomPW()
+        return generateRandomPW(num)
 
 result_code=''
 first_word=''
@@ -140,10 +140,23 @@ def result():
     
     return render_template('result.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = similarity, d6 = len(result_code), d7 = codelevel,d8=final_first, d9=final_second, d10=final_third)
 
-@app.route("/mean/")
+@app.route("/mean/",methods=['GET','POST'])
 def mean():    
-    toBereturned = generateRandomPW()
     global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,codelevel,similarity
+    
+    if request.method=='GET':
+        toBereturned = generateRandomPW(20)
+    elif request.method=='POST':
+        code_length=request.form['codelength']
+        if code_length=='no-filter':
+            toBereturned=generateRandomPW(20)
+        elif code_length=='under-three':
+            toBereturned=generateRandomPW(4)
+        elif code_length=='under-four':
+            toBereturned=generateRandomPW(5)
+        elif code_length=='under-five':
+            toBereturned=generateRandomPW(6)
+    
     result_code=toBereturned[3]
     first_word=toBereturned[0]
     second_word=toBereturned[1]
