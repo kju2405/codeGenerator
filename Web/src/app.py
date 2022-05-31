@@ -3,16 +3,31 @@ from flask import Flask, render_template, request, redirect,  flash
 import sqlite3
 import os
 import sys
-import urllib3
-import json
+from gensim.models import Word2Vec
+from gensim.models.callbacks import CallbackAny2Vec
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))))
 from Python.KorTxtMgmt import passwdcheck as pwd
 
-load_dotenv()
+class callback(CallbackAny2Vec):
+    """Callback to print loss after each epoch."""
 
+    def __init__(self):
+        self.epoch = 0
+        self.loss_to_be_subed = 0
+    def on_epoch_end(self, model):
+        loss = model.get_latest_training_loss()
+        loss_now = loss - self.loss_to_be_subed
+        self.loss_to_be_subed = loss
+        print('Loss after epoch {}: {}'.format(self.epoch, loss_now))
+        self.epoch += 1
+
+load_dotenv()
+""" OpenAPI 기반
 openApiURL = "http://aiopen.etri.re.kr:8000/WiseWWN/WordRel"
 accessKey = os.environ.get("APIKEY")
+"""
 dbPath = os.environ.get("DBPATH")
+modelPath = os.environ.get("MODELPATH")
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))))
 
@@ -22,8 +37,11 @@ app.secret_key="My_Key"
 conn = sqlite3.connect(dbPath, check_same_thread=False)
 curs = conn.cursor()
 
+loaded_model = Word2Vec.load(modelPath)
+
 fetchedData = [0, 0, 0]
 
+""" OpenAPI 기반(사용하지 않음)
 def requestWordSimilarity(word_01, word_02):
     requestJson = {
         "access_key": accessKey,
@@ -56,28 +74,33 @@ def calculateWordSimilarity(word_01, word_02):
     print(result_sim)
     
     return result_sim.index(max(result_sim))
+"""
+
+def calculateWordSimilarity(word_01, word_02):
+    result = loaded_model.wv.similarity(word_01, word_02)
+    return result
 
 
-def generateRandomPW(num):
+def generateRandomPW():
     for x in range(3):
-        curs.execute(f'select * from wordlist where PWChecker_Pron >= 5 and length(Word)<{num} order by RANDOM() limit 1')
+        curs.execute("select * from wordlist where PWChecker_Pron >= 5 order by RANDOM() limit 1")
         fetchresult = curs.fetchone()
         fetchedData[x] = list(fetchresult)
 
     condition_01 = float(calculateWordSimilarity(fetchedData[0][0], fetchedData[1][0]))
     condition_02 = float(calculateWordSimilarity(fetchedData[0][0], fetchedData[2][0]))
     condition_03 = float(calculateWordSimilarity(fetchedData[1][0], fetchedData[2][0]))
+    print(condition_01 + condition_02 + condition_03, fetchedData[0][0], fetchedData[1][0], fetchedData[2][0])
 
-    if (condition_01 + condition_02 + condition_03) <= 1.5:
+    if (condition_01 + condition_02 + condition_03) <= 2.5:
         toString = ''
         toString += fetchedData[0][1] + fetchedData[1][1] + fetchedData[2][1]
         toPassword = ''
         toPassword += fetchedData[0][3] + fetchedData[1][3] + fetchedData[2][3]
         toBereturned = [fetchedData[0][0], fetchedData[1][0], fetchedData[2][0], toString, float(condition_01 + condition_02 + condition_03)/3, len(toPassword), (pwd.passwdCheck(toPassword)) * 20,fetchedData[0][7],fetchedData[1][7],fetchedData[2][7],fetchedData[0][2],fetchedData[1][2],fetchedData[2][2],fetchedData[0][1],fetchedData[1][1],fetchedData[2][1],fetchedData[0][3],fetchedData[1][3],fetchedData[2][3],fetchedData[0][4],fetchedData[1][4],fetchedData[2][4]]
+        return toBereturned
     else:
-        generateRandomPW()
-
-    return toBereturned
+        return generateRandomPW()
 
 result_code=''
 first_word=''
@@ -117,22 +140,10 @@ def result():
     
     return render_template('result.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = similarity, d6 = len(result_code), d7 = codelevel,d8=final_first, d9=final_second, d10=final_third)
 
-@app.route("/mean/",methods=['GET','POST'])
+@app.route("/mean/")
 def mean():    
+    toBereturned = generateRandomPW()
     global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,codelevel,similarity
-    if request.method=='GET':
-        toBereturned = generateRandomPW(20)
-    elif request.method=='POST':
-        code_length=request.form['codelength']
-        if code_length=='no-filter':
-            toBereturned=generateRandomPW(20)
-        elif code_length=='under-three':
-            toBereturned=generateRandomPW(4)
-        elif code_length=='under-four':
-            toBereturned=generateRandomPW(5)
-        elif code_length=='under-five':
-            toBereturned=generateRandomPW(6)
-    
     result_code=toBereturned[3]
     first_word=toBereturned[0]
     second_word=toBereturned[1]
