@@ -11,7 +11,9 @@ HEAD = list('ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ')        
 BODY = list('ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ')                           # 중성
 TAIL = list(' ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ')              # 종성
 
-STRONG_KOR = list('ㄲㄲㄳㄴㄵㄶㄸㄸㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅃㅄㅆㅆㅇㅈㅉㅊㅋㅌㅍㅎㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ')     # KOR list를 된소리화를 위해 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ만 된소리로 변경
+STRONG_KOR = list('ㄲㄲㄳㄴㄵㄶㄸㄸㄹㄺㄻㄼㄽㄾㄿㅀㅁㅃㅃㅄㅆㅆㅇㅉㅉㅊㅋㅌㅍㅎㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ')     # KOR list를 된소리화를 위해 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ만 된소리로 변경
+
+STRONG_CANNOT_BE_TAIL = list(' ㄱㄲㄳㄴㄵㄶㄸㄹㄺㄻㄼㄽㄾㄿㅀㅁㅃㅄㅅㅆㅇㅉㅊㅋㅌㅍㅎ')              # 종성 편집(ㄷ, ㅂ, ㅈ 된소리화, 나머지는 인덱싱을 위해서만 포함)
 
 KOR = list('ㄱㄲㄳㄴㄵㄶㄷㄸㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅃㅄㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ')            # 한글 목록
 ENG = ['r', 'R', 'rt', 's', 'sw', 'sg', 'e', 'E', 'f', 'fr', 'fa', 'fq', 'ft', 'fx', 'fv', 'fg', 'a', 'q',                      # 쿼티 기반 알파벳
@@ -91,6 +93,13 @@ def korJoin(text):
                 tail = TAIL.index(text.pop())                                       # 마지막 인덱스 추출해서 종성 파트에 삽입 (이후 text[-1] in tail 조건을 빠져나와 elif 조건에서 받침 있는 글자로 조합)
             else:
                 result += text.pop()                                                # 중성이 없다 == 모음이 없다 == 자음 하나로만 이루어졌다 -> 자음만 추출해서 저장
+        elif text[-1] not in TAIL and text[-1] in STRONG_CANNOT_BE_TAIL:            # 종성이 ㄷ, ㅂ 혹은 ㅈ 받침일 경우 (ㄲ, ㅆ는 종성에 올 수 있음)
+            if text[-2] in BODY:                                                    # 마지막에서 두 번째 인덱스가 중성일 경우 (중성은 무조건 모음)
+                tail = STRONG_CANNOT_BE_TAIL.index(text.pop())                      # 쌍받침화되지 않는 홑받침 인덱스만 받아서 홑받침으로 변환
+            else:
+                result += text.pop()
+                
+                    
         elif text[-1] in BODY:                                                      # 마지막 인덱스가 중성일 경우 (종성이 없는 한글 == '가' or '네'와 같은 받침 없는 글자)
             body = BODY.index(text.pop())                                           # 중성 저장
             head = HEAD.index(text.pop())                                           # 초성 저장
@@ -113,6 +122,8 @@ def split(kor):
     return HEAD[code // SET_AS_HEAD], BODY[(code % SET_AS_HEAD) // SET_AS_BODY], TAIL[(code % SET_AS_HEAD) % SET_AS_BODY]
 
 def main():                                                                         # 테스트용 코드
+    print(combine(kor2strongkor("김밥")))
+    print(combine(kor2strongkor("각닫밥삿잦")))
     print(split('뷁'))
     print(kor2strongkor("날시각 가다롭네요".replace(" ", "")))
     print(combine("ㄴㅏㄹㅆㅣㄲㅏㄲ ㄲㅏㄸㅏㄹㅗㅂㄴㅔㅇㅛ".replace(" ", "")))
