@@ -1,0 +1,78 @@
+{% with messages=get_flashed_messages() %} {% if messages %}
+<script>
+  alert("{{messages[-1]}}");
+</script>
+{% endif %} {% endwith %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/special_styles.css')}}"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>codeGenerator</title>
+  </head>
+  <body>
+    <header class="settings-header">
+      <a href="/" class="settings-header__column">
+        <span><i class="fas fa-home"></i></span>
+      </a>
+      <h1 class="header__title settings-header__column">codeGenerator</h1>
+      <div class="header__pic settings-header__column">
+        <span
+          ><i class="fa fa-refresh" onclick="location.href='result'"></i
+        ></span>
+      </div>
+    </header>
+
+    <main class="main-chat">
+      <div class="settings-header-semi">
+        <span
+          >암호에 포함된 숫자 중 특수문자로 변경할 숫자의 번호를
+          입력해주세요.</span
+        >
+      </div>
+    </main>
+
+    <header class="welcome-header">
+      <h1 class="welcome-header__title">현재 생성된 암호는 다음과 같습니다!</h1>
+      <p>↓↓↓↓생성된 암호↓↓↓↓</p>
+      <h3>{{ d1 }}</h3>
+      {% for i in d2 %}
+      <div
+        style="
+          width: 50vw;
+          height: 20vh;
+          overflow: hiddlen;
+          white-space: nowrap;
+        "
+      >
+        <span style="font-weight: bold; font-size: 30px"
+          >{{ loop.index }}.</span
+        >
+        {{ i }}번째 위치한 숫자 '{{ d3[loop.index-1]}}' -> '{{
+        d4[d3[loop.index-1]]}}'<br />
+        {% endfor %}
+      </div>
+    </header>
+
+    <form action="/check/" method="POST" id="memory-form">
+      <input
+        name="special-num"
+        required
+        type="text"
+        placeholder="위 목록 중 특수문자로 변경할 숫자의 번호를 입력해주세요."
+      />
+      <input type="submit" value="특수 문자로 변경!" />
+    </form>
+
+    <script
+      src="https://kit.fontawesome.com/87de356888.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -101,6 +101,9 @@ def generateRandomPW(num):
         return toBereturned
     else:
         return generateRandomPW(num)
+    
+def hasNumber(stringVal):
+    return any(elem.isdigit() for elem in stringVal)
 
 result_code=''
 first_word=''
@@ -127,7 +130,11 @@ final_second=''
 final_third=''
 codelevel=''
 similarity=''
-
+num_lst=['0','1','2','3','4','5','6','7','8','9']
+str_num_idx=[]
+num_lst_idx=[]
+eng_str_num_idx=[]
+special_symbol=[')','!','@','#','$','%','^','&','*','(']
 
 @app.route('/')
 def index():
@@ -135,7 +142,7 @@ def index():
 
 @app.route("/result",methods=['GET','POST'])
 def result():
-    global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,codelevel,similarity,final_first,final_second,final_third
+    global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,codelevel,similarity,final_first,final_second,final_third,final_pw
     
     first_input=request.form['first-input']
     second_input=request.form['second-input']
@@ -145,8 +152,22 @@ def result():
     else:
         flash("암호가 일치하지 않습니다. 다시 한번 입력해주세요.")
         return render_template('check.html',d1= result_code)
+@app.route("/check/",methods=['GET','POST'])
+def check():
+    global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,codelevel,similarity,final_first,final_second,final_third,num_lst,str_num_idx,num_lst_idx,special_symbol,eng_str_num_idx,final_pw
+    
+    special_num=request.form['special-num']
+    change_idx=int(special_num)-1
+    change_special_symbol=int(num_lst_idx[change_idx])
+    result_code=list(result_code)
+    result_code[str_num_idx[change_idx]]=special_symbol[change_special_symbol]
+    result_code=''.join(result_code)
+    final_pw=list(final_pw)
+    final_pw[eng_str_num_idx[change_idx]]=special_symbol[change_special_symbol]
+    final_pw=''.join(final_pw)
     
     
+    return render_template('check.html',d1= result_code)
 
 @app.route("/mean/",methods=['GET','POST'])
 def mean():    
@@ -194,11 +215,11 @@ def choice():
     global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron
     return render_template('choice.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = first_ssangjaeum, d5 = second_ssangjaeum, d6 = third_ssangjaeum,d7=first_word2pron,d8=second_word2pron,d9=third_word2pron)
 
-@app.route('/check/',methods=['GET','POST'])
-def check():
-    global result_code,first_word2pron,second_word2pron,third_word2pron,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,final_pw,final_first,final_second,final_third
+@app.route('/special/',methods=['GET','POST'])
+def special():
+    global result_code,first_word2pron,second_word2pron,third_word2pron,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,final_pw,final_first,final_second,final_third,num_lst,str_num_idx,num_lst_idx,special_symbol,eng_str_num_idx
     if request.method =='GET':
-        return render_template('check.html',d1 = result_code)
+        return render_template('special_symbol.html',d1 = result_code)
     elif request.method=='POST':
         final_pw=''
         first_choice=request.form['first-choice']
@@ -230,16 +251,31 @@ def check():
                 result_code+=third_word2pron
                 final_pw+=third_pron2pw
                 final_third+=third_word2pron
-            return render_template('check.html',d1= result_code)
-        else:        
-            first_input=request.form['first-input']
-            second_input=request.form['second-input']
-            if first_input==second_input and first_input==final_pw:
-                url='/final/'
-                return redirect(url)
-            else:
-                flash("암호가 일치하지 않습니다. 다시 한번 입력해주세요.")
-                return render_template('check.html',d1= result_code)  
+            if hasNumber(result_code):
+                
+                str_num_idx=[]
+                num_lst_idx=[]
+                eng_str_num_idx=[]
+                str_idx=0
+                for word in final_pw:
+                    num_idx=0
+                    for num in num_lst:
+                        if word==num:
+                            eng_str_num_idx.append(str_idx)
+                        num_idx+=1
+                    str_idx+=1
+                
+                str_idx=0
+                for word in result_code:
+                    num_idx=0
+                    for num in num_lst:
+                        if word==num:
+                            str_num_idx.append(str_idx)
+                            num_lst_idx.append(num_idx)
+                        num_idx+=1
+                    str_idx+=1
+                
+            return render_template('special_symbol.html',d1= result_code,d2=str_num_idx,d3=num_lst_idx,d4=special_symbol)  
 @app.route("/final/")
 def final():    
     global result_code,first_word,second_word,third_word,final_first,final_second,final_third,final_pw
