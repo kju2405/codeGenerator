@@ -279,7 +279,7 @@ def special():
 @app.route("/final/")
 def final():    
     global result_code,first_word,second_word,third_word,final_first,final_second,final_third,final_pw
-    return render_template('final.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = similarity, d6 = len(final_pw), d7 = codelevel,d8=final_first, d9=final_second, d10=final_third)
+    return render_template('final.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = similarity, d6 = len(final_pw), d7 = pwd.passwdCheck(final_pw) * 20,d8=final_first, d9=final_second, d10=final_third)
           
         
 
