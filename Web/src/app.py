@@ -200,6 +200,7 @@ def check():
     if request.method =='GET':
         return render_template('check.html',d1 = result_code)
     elif request.method=='POST':
+        final_pw=''
         first_choice=request.form['first-choice']
         if first_choice=='first-choice-left' or first_choice=='first-choice-right':
             second_choice=request.form['second-choice']
@@ -241,8 +242,8 @@ def check():
                 return render_template('check.html',d1= result_code)  
 @app.route("/final/")
 def final():    
-    global result_code,first_word,second_word,third_word,final_first,final_second,final_third
-    return render_template('final.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = similarity, d6 = len(result_code), d7 = codelevel,d8=final_first, d9=final_second, d10=final_third)
+    global result_code,first_word,second_word,third_word,final_first,final_second,final_third,final_pw
+    return render_template('final.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = similarity, d6 = len(final_pw), d7 = codelevel,d8=final_first, d9=final_second, d10=final_third)
           
         
 
