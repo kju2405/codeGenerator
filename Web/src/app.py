@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect,  flash
+from flask import Flask, render_template, request, redirect,flash
 import sqlite3
 import os
 import sys
@@ -137,8 +137,16 @@ def index():
 def result():
     global result_code,first_word,second_word,third_word,first_meaning,second_meaning,third_meaning,first_ssangjaeum,second_ssangjaeum,third_ssangjaeum,first_word2pron,second_word2pron,third_word2pron,first_pron2pw,second_pron2pw,third_pron2pw,first_strong2pw,second_strong2pw,third_strong2pw,codelevel,similarity,final_first,final_second,final_third
     
+    first_input=request.form['first-input']
+    second_input=request.form['second-input']
+    if first_input==second_input and first_input==final_pw:
+        url='/final/'
+        return redirect(url)
+    else:
+        flash("암호가 일치하지 않습니다. 다시 한번 입력해주세요.")
+        return render_template('check.html',d1= result_code)
     
-    return render_template('result.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = similarity, d6 = len(result_code), d7 = codelevel,d8=final_first, d9=final_second, d10=final_third)
+    
 
 @app.route("/mean/",methods=['GET','POST'])
 def mean():    
@@ -223,8 +231,8 @@ def check():
                 final_third+=third_word2pron
             return render_template('check.html',d1= result_code)
         else:        
-            first_input=request.form['first-choice']
-            second_input=request.form['second-choice']
+            first_input=request.form['first-input']
+            second_input=request.form['second-input']
             if first_input==second_input and first_input==final_pw:
                 url='/final/'
                 return redirect(url)
@@ -234,7 +242,7 @@ def check():
 @app.route("/final/")
 def final():    
     global result_code,first_word,second_word,third_word,final_first,final_second,final_third
-    return render_template('final.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = final_first, d6 = final_second,d7=final_third)
+    return render_template('final.html', d1 = first_word, d2 = second_word, d3 = third_word, d4 = result_code, d5 = similarity, d6 = len(result_code), d7 = codelevel,d8=final_first, d9=final_second, d10=final_third)
           
         
 
