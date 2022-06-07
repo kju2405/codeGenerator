@@ -222,6 +222,9 @@ def special():
         return render_template('special_symbol.html',d1 = result_code)
     elif request.method=='POST':
         final_pw=''
+        final_first=''
+        final_second=''
+        final_third=''
         first_choice=request.form['first-choice']
         if first_choice=='first-choice-left' or first_choice=='first-choice-right':
             second_choice=request.form['second-choice']
